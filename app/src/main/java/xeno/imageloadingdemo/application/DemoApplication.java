@@ -2,12 +2,12 @@ package xeno.imageloadingdemo.application;
 
 import android.app.Application;
 
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
+//import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+//import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+//import com.nostra13.universalimageloader.core.ImageLoader;
+//import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+//import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+//import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
 /**
  * Created by xeno on 2018/2/13.
@@ -25,18 +25,18 @@ public class DemoApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration
-                .Builder(this)
-                .threadPoolSize(3)
-                .threadPriority(Thread.NORM_PRIORITY)
-                .denyCacheImageMultipleSizesInMemory()
-                .memoryCache(new WeakMemoryCache())
-                .diskCacheSize(DISK_CACHE_SIZE)
-                .diskCacheFileNameGenerator(new Md5FileNameGenerator())//将保存的时候URL加密
-                .tasksProcessingOrder(QueueProcessingType.LIFO)
-                .imageDownloader(new BaseImageDownloader(this,CONNECTION_TIME_OUT,READ_TIME_OUT))
-                .build();
-        ImageLoader.getInstance().init(config);
+//        ImageLoaderConfiguration config = new ImageLoaderConfiguration
+//                .Builder(this)
+//                .threadPoolSize(3)
+//                .threadPriority(Thread.NORM_PRIORITY)
+//                .denyCacheImageMultipleSizesInMemory()
+//                .memoryCache(new WeakMemoryCache())
+//                .diskCacheSize(DISK_CACHE_SIZE)
+//                .diskCacheFileNameGenerator(new Md5FileNameGenerator())//将保存的时候URL加密
+//                .tasksProcessingOrder(QueueProcessingType.LIFO)
+//                .imageDownloader(new BaseImageDownloader(this,CONNECTION_TIME_OUT,READ_TIME_OUT))
+//                .build();
+//        ImageLoader.getInstance().init(config);
     }
 
 
