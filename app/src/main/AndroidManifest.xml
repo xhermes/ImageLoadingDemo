@@ -16,17 +16,16 @@
         android:theme="@style/AppTheme">
         <!--for image loading test -->
         <activity android:name=".activity.MainActivity">
-
-        </activity>
-        <!--for lock test -->
-        <activity
-            android:name=".activity.LockActivity"
-            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <!--for lock test -->
+        <activity
+            android:name=".activity.LockActivity"
+            android:screenOrientation="portrait">
         </activity>
 
         <!--for socket test -->

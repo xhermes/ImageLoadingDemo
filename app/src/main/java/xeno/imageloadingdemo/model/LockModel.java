@@ -10,46 +10,88 @@ import java.util.logging.Logger;
  */
 
 public class LockModel {
-    final Resource res = new Resource();
-    final Object obj = new Object();
 
     public void play() {
-        createThreads();
-    }
-
-    public void createThreads() {
-        for (int i = 0; i < res.ticketCount; i++) {
-            new Thread() {
-                @Override
-                public void run() {
-                    if (res.ticketCount > 0) {
-                        try {
-                            sleep(100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        buy();
-                    }
-
-                }
-            }.start();
+        TestThread b = new TestThread("线程B");
+        b.start();
+        try {
+            b.joinX(0);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-
+        Log.i("x","主线程继续执行");
     }
+
+//    public void getLock() {
+//        synchronized (obj) {
+//            //主线程先拿到锁
+//            Log.i("x", Thread.currentThread().getName() + "执行中");
+//            try {
+//                Log.i("x", "调用wait()");
+//                obj.wait();
+//                Log.i("x", Thread.currentThread().getName() + "执行中");
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     public void buy() {
-        synchronized (res) {
-            res.ticketCount--;
-            Log.w("xeno", Thread.currentThread().getName() + "买票，剩余" + res.ticketCount);
-        }
 
     }
 
-    public static class Resource {
-        int ticketCount = 20;
-        public void setCount(int count) {
-            ticketCount = count;
+    public class TestThread extends Thread {
+        final Object lock = new Object();
+
+        public TestThread(String name) {
+            super(name);
         }
+
+        public final void joinX(long millis) throws InterruptedException {
+            synchronized(lock) {
+                long base = System.currentTimeMillis();
+                long now = 0;
+
+                if (millis < 0) {
+                    throw new IllegalArgumentException("timeout value is negative");
+                }
+
+                if (millis == 0) {
+                    while (isAlive()) {
+                        Log.i("x", Thread.currentThread().getName());
+                        lock.wait(0);
+                    }
+                } else {
+                    while (isAlive()) {
+                        long delay = millis - now;
+                        if (delay <= 0) {
+                            break;
+                        }
+                        lock.wait(delay);
+                        now = System.currentTimeMillis() - base;
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void run() {
+            for (int i = 0; i < 20; i++) {
+                try {
+                    sleep(100);
+                    Log.i("x", Thread.currentThread().getName() + i);
+                    if(i==15) {
+                        synchronized (lock) {
+                            lock.notifyAll();
+                        }
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
     }
 
 }
