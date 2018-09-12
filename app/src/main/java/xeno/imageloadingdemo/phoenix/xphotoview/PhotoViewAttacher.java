@@ -12,6 +12,7 @@ import android.graphics.RectF;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import java.io.File;
@@ -564,6 +565,7 @@ public class PhotoViewAttacher implements IViewAttacher{
 
     @Override
     public void scale(float cx, float cy, float scale) {
+        Log.i("xeno", "scale " + scale);
         if (isNotAvailable()) {
             return;
         }
@@ -972,6 +974,7 @@ public class PhotoViewAttacher implements IViewAttacher{
             @Override
             public void run()
             {
+                Log.i("xeno","猜测是初始化方法，后面手势缩放不会执行");
                 decodeThumbUnitBitmap();
                 onSetImageFinished(true);
             }
@@ -986,6 +989,7 @@ public class PhotoViewAttacher implements IViewAttacher{
                 for (int m = 0; m < mGridWidth; ++m) {
                     Rect rect = getUnitRect(n, m);
                     if (rect != null) {
+                        Log.i("xeno", "做了decode");
                         mGrids[n][m].mCurSampleSize = mSampleSize;
                         mGrids[n][m].mInitiatedThumbBitmap = decodeRectBitmap(rect, mGrids[n][m].mCurSampleSize);
                     }
@@ -1092,7 +1096,7 @@ public class PhotoViewAttacher implements IViewAttacher{
             if (left == right || top == bottom) {
                 return null;
             }
-
+            Log.i("xeno", "创建UnitRect:" + left + "," + right);
             return new Rect(left, top, right, bottom);
         }
 

@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         pager.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() {
-                return 10;
+                return 1;
             }
 
             @Override
